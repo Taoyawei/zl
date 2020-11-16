@@ -7,7 +7,8 @@ const  { loginCheck } = require('../utils/loginCheck')
 const {
   setRegister,
   setLogin,
-  deleteLogin
+  deleteLogin,
+  modifyPassword
 } = require('../controller/user.js')
 
 // 注册
@@ -22,6 +23,8 @@ router.post('/register', async (ctx, next) => {
 
 // 登录
 router.post('/login', async (ctx, next) => {
+  // console.log('***************')
+  // console.log(ctx.request.body)
   const { mobile, password } = ctx.request.body
   ctx.body = await setLogin({
     ctx,
@@ -33,6 +36,16 @@ router.post('/login', async (ctx, next) => {
 router.get('/deleteLogin', loginCheck, async (ctx, next) => {
   ctx.body = await deleteLogin({
     ctx
+  })
+})
+
+// 修改密码
+router.post('/modify/password', loginCheck, async (ctx, next) => {
+  const  { mobile, password, newPassword } = ctx.request.body
+  ctx.body = await modifyPassword({
+    mobile,
+    password,
+    newPassword
   })
 })
 

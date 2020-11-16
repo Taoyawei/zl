@@ -4,8 +4,14 @@
  */
 const {
   getUser,
-  createUser
+  createUser,
+  domodify
 } = require('../modular/user.js')
+
+// 导入公共方法
+// const  {
+//   judgeParams
+// } = require('../utils/public.js')
 // 导入成功，失败模板
 const {
   SuccessModal,
@@ -16,7 +22,8 @@ const  {
   registerUserNameExistInfo,
   registerFailInfo,
   requestParams,
-  registerUserNameNotExistInfo
+  registerUserNameNotExistInfo,
+  changePasswordFailInfo
 } = require('../utils/errorInfo.js')
 
 const doCrypto = require('../utils/cryp')
@@ -51,6 +58,7 @@ async function setRegister({mobile, password, nickName}) {
  * 登录
  */
 async function setLogin ({ ctx, mobile, password }) {
+  // judgeParams(mobile, password)
   if (!mobile || !password) return new ErrorModal(requestParams)
   // 根据信息查询用户
   const result = await getUser(mobile, doCrypto(password))
@@ -69,8 +77,25 @@ async function deleteLogin ({ctx}) {
   set('userInfo', null)
   return new SuccessModal()
 }
+
+/**
+ * @param {string} mobile 手机号
+ * @param {string} password 密码
+ * @param {string} newPassword 新密码
+ */
+async function modifyPassword ({mobile, password, newPassword}) {
+  if (!mobile || !password || !newPassword || password === newPassword) return new ErrorModal(requestParams)
+  const result = await domodify({mobile, password, newPassword})
+  if (!result) {
+    return new ErrorModal(changePasswordFailInfo)
+  }
+  return new SuccessModal()
+  // 7fe36acc02204c5a0f61e5b77b8e0793
+  // 7fe36acc02204c5a0f61e5b77b8e0793
+}
 module.exports = {
   setRegister,
   setLogin,
-  deleteLogin
+  deleteLogin,
+  modifyPassword
 }

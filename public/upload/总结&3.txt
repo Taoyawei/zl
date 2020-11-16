@@ -1,0 +1,23 @@
+1.https原理
+2.首屏加载
+3.性能
+4.调试器
+5.谷歌插件使用
+6.typeScript
+7.数据抓包
+
+1.交互层面： 
+	a. 可以通过Accept-Encoding/Content-Encoding来设置交互数据压缩
+	b. 通过Cache-Control来设置强缓存，Last-Modified/If-Modified-Since, Etag/If-None-Match来设置协商缓存
+	c. 通过node搭建代理服务器可以做一些缓存
+2. 渲染层面： 
+	a. 减少重绘与回流，例如尽量不用js修改样式，复杂动画尽量脱离文档流，修改元素尽量先隐藏修改完再显示等等
+	b. 合理使用CSS硬件加速，例如opacity, transform,filters等等
+	c. 图标比图片好，雪碧图比单个图片好，合理大小图片比大图好，图片压缩
+	d. 使用SSR
+3. 代码层面：
+	a. 合理规划整合接口调用
+	b. 使用防抖，节流防止不停触发
+	c. 合理使用递归，防止内存泄露，防止死循环，减少Commjs，合理使用AMD和ES6，合理使用时间代理
+	d. html语义化标签明确
+	c. 预加载，懒加载

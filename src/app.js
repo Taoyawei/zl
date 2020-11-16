@@ -3,12 +3,14 @@ const app = new Koa()
 const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
-const bodyparser = require('koa-bodyparser')
+// const bodyparser = require('koa-bodyparser')
+const koaBody = require('koa-body')
 const logger = require('koa-logger')
 const session = require('koa-session')
 const redisStore = require('koa-redis')
 const { REDIS_CONFIG } = require('./config/db.js')
 const routes = require('./routes/index.js')
+const path = require('path')
 // const index = require('./routes/index')
 // const users = require('./routes/users')
 
@@ -16,8 +18,21 @@ const routes = require('./routes/index.js')
 onerror(app)
 
 // middlewares
-app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
+// app.use(bodyparser({
+//   enableTypes:['json', 'form', 'text', 'form-data']
+// }))
+app.use(koaBody({
+  multipart: true, // 是否支持上传
+  // encoding: 'gzip', // 支持压缩
+  formidable: { // 对于上传文件的配置
+    // uploadDir: path.join(__dirname, 'public/upload'), // 设置文件上传目录
+    keepExtensions: true, // 保持文件上传的后缀
+    // maxfieldsSize:  // 文件上传大小设置
+    onFileBegin: (name, file) => { // 文件上传之前的设置
+      // console.log(file)
+    }
+
+  }
 }))
 app.use(json())
 app.use(logger())
