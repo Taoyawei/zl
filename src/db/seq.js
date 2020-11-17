@@ -10,6 +10,9 @@ const { host, user, password, database } = MYSQL_CONFIG
 const config = {
   host,
   dialect: 'mysql'
+  // define: {
+  //   timestamps: false
+  // }
 }
 
 // 如果测试环境打印日志

@@ -57,6 +57,22 @@ const Book_lists = seq.define('book_lists', {
     type: Sequelize.INTEGER,
     allowNull: false,
     comment: '上传书的用户id，不能为空'
+  },
+  createAt: {
+    type: Sequelize.DATE,
+    allowNull: false,
+    get() {
+      const createAt = this.getDataValue('createAt')
+      return createAt
+    },
+    set(createAt) {
+      return this.setDataValue('createAt', createAt)
+    }
   }
+  // create_time: {
+  //   type: Sequelize.DATE,
+  //   allowNull: false,
+  //   comment: '创建时间'
+  // }
 })
 module.exports = Book_lists

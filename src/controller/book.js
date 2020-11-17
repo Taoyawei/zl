@@ -4,10 +4,18 @@
  */
 const fs = require('fs')
 const { get } = require('../redis/index.js')
-
 const {
-  SuccessModal
+  doSetBook,
+  doGetCollection,
+  doGetDateBook
+} = require('../modular/book.js')
+const {
+  SuccessModal, ErrorModal
 } = require('../utils/response')
+const {
+  requestParams,
+  requestFind
+} = require('../utils/errorInfo.js')
 
 /**
  * 上传图书保存至本地
@@ -23,6 +31,70 @@ async function updataBook (file) {
   return new SuccessModal()
 }
 
+/**
+ * 存入图书信息
+ * @param {string} book_name 书名
+ * @param {string} author 作者
+ */
+async function setBook ({ book_name, author }) {
+  if (!book_name || !author) return new ErrorModal(requestParams)
+  const info = await get('userInfo')
+  const result = await doSetBook({
+    book_name,
+    author,
+    user_id: info.id
+  })
+  if (!result) {
+    return new ErrorModal(requestFind)
+  } else if (result && result.error) {
+    return new ErrorModal({
+      code: 2003,
+      message: result.error
+    })
+  } else {
+    return new SuccessModal()
+  }
+}
+
+/**
+ * 根据用户id获取收藏的书籍信息
+ */
+async function getCollection () {
+  const info = await get('userInfo')
+  const result = await doGetCollection(info.id)
+  if (!result) {
+    return new ErrorModal(requestFind)
+  } else if (result && result.error) {
+    return new ErrorModal({
+      code: 2004,
+      message: result.error
+    })
+  } else {
+    return new SuccessModal(result)
+  }
+}
+
+/**
+ * 根据上传日期获取书单
+ * @param {int} startDate 开始日期
+ * @param {int} endDate 结束日期
+ */
+async function getDateBook ({startDate, endDate}) {
+  const result = await doGetDateBook({startDate, endDate})
+  if (!result) {
+    return new ErrorModal(requestFind)
+  } else if (result && result.error) {
+    return new ErrorModal({
+      code: 2005,
+      message: result.error
+    })
+  } else {
+    return new SuccessModal(result)
+  }
+}
 module.exports = {
-  updataBook
+  updataBook,
+  setBook,
+  getCollection,
+  getDateBook
 }

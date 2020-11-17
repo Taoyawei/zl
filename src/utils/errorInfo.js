@@ -9,6 +9,10 @@ module.exports = {
         code: 1000,
         message: '参数不完整'
     },
+    requestFind: {
+        code: 2000,
+        message: '查询错误'
+    },
     // 用户名已存在
     registerUserNameExistInfo: {
         code: 10001,

@@ -8,6 +8,7 @@ const Circle = require('./circle.js')
 const Comments = require('./comment.js')
 const User_circle = require('./user_circle.js')
 const Fans = require('./fans.js')
+const Collections = require('./collection.js')
 
 /**
  * 用户与书之间的关系，是一对多的关系
@@ -17,6 +18,16 @@ Users.hasMany(Book_lists, { // users有很多个Book_lists，一个人可以上�
 })
 Book_lists.belongsTo(Users, { // 一个Book_lists属于一个Users，一本书只能由一个人上传
   foreignKey: 'user_id'
+})
+
+/**
+ * 用户与收藏书之间的关系，多对多关系
+ */
+Users.belongsToMany(Collections, {
+  through: 'user_collections'
+})
+Collections.belongsToMany(Users, {
+  through: 'user_collections'
 })
 
 /**
@@ -95,5 +106,6 @@ module.exports = {
   Circle,
   Comments,
   Fans,
-  User_circle
+  User_circle,
+  Collections
 }
