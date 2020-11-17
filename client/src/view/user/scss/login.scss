@@ -32,16 +32,12 @@
     // border: 1px solid blue;
     .content-item {
       position: relative;
-      margin-top: Px(20);
+      height: Px(80);
+      // margin-top: Px(18);
       .register-mobile {
         background: none;
         border-bottom: 1px solid #ffffff;
         padding-left: 24px;
-        input[type="text"] {
-          color: #ffffff;
-          margin-top: 8px;
-          font-size: Px(18);
-        }
       }
       .mobile-icon {
         position: absolute;
@@ -50,7 +46,7 @@
       }
     }
   }
-  .login-btn {
+  .register-btn {
     width: 100%;
     margin-top: Px(180);
     // border: 1px solid red;
@@ -58,20 +54,41 @@
       width: 100%;
       height: Px(70);
       color: #ffffff;
-      background: none;
+      background: none!important;
       line-height: Px(70);
-      border: none!important;
+      font-size: Px(18);
       // border: 1px solid red!important;
-      // border: 1px solid #ffffff;
+      border: 1px solid #ffffff!important;
       border-radius: 8px;
-      background: #01cd9a!important;
       span {
         font-size: Px(29);
       }
     }
   }
 }
+.register .register-content .content-item .register-mobile input[type="text"] {
+  margin-top: 14px!important;
+}
+.am-list-item .am-input-control input {
+  color: #ffffff;
+  font-size: Px(18);
+}
 a.am-button.register-button::before {
   border: none!important;
   // border: none;
+}
+.am-list-body {
+  background: none;
+}
+.am-list-item {
+  background: none;
+}
+.am-list-body::before {
+ z-index: -2!important;
+}
+.am-list-body::after {
+  z-index: -2!important;
+ }
+.am-list-line::after {
+  z-index: -1!important;
 }

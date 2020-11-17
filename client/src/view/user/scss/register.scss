@@ -32,16 +32,12 @@
     // border: 1px solid blue;
     .content-item {
       position: relative;
-      margin-top: Px(20);
+      height: Px(80);
+      // margin-top: Px(18);
       .register-mobile {
         background: none;
         border-bottom: 1px solid #ffffff;
         padding-left: 24px;
-        input[type="text"] {
-          color: #ffffff;
-          margin-top: 8px;
-          font-size: Px(18);
-        }
       }
       .mobile-icon {
         position: absolute;
@@ -70,7 +66,29 @@
     }
   }
 }
+.register .register-content .content-item .register-mobile input[type="text"] {
+  margin-top: 14px!important;
+}
+.am-list-item .am-input-control input {
+  color: #ffffff;
+  font-size: Px(18);
+}
 a.am-button.register-button::before {
   border: none!important;
   // border: none;
+}
+.am-list-body {
+  background: none;
+}
+.am-list-item {
+  background: none;
+}
+.am-list-body::before {
+ z-index: -2!important;
+}
+.am-list-body::after {
+  z-index: -2!important;
+ }
+.am-list-line::after {
+  z-index: -1!important;
 }
