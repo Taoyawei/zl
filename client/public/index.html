@@ -15,6 +15,7 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!-- <link rel="stylesheet" href="./iconfont/iconfont.css" /> -->
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -25,6 +26,15 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <script src = "https://at.alicdn.com/t/font_2206911_yy6lmmipqbq.js"></script>
+    <style type="text/css">
+      .icon {
+         width: 1em; height: 1em;
+         vertical-align: -0.15em;
+         fill: currentColor;
+         overflow: hidden;
+      }
+  </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -40,8 +50,10 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
     <script>
-      const hNode = document.querySelector('html')
-      hNode.style.fontSize = document.clientWidth / 10 + 'px'
+      window.onload = function () {
+        const hNode = document.querySelector('html')
+        hNode.style.fontSize = document.body.clientWidth / 10 + 'px'
+      }
     </script>
   </body>
 </html>

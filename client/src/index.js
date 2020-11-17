@@ -8,9 +8,9 @@ import './index.scss';
 import Router from './router/router.js'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Router />
-  </React.StrictMode>,
+  // <React.StrictMode>
+  // </React.StrictMode>,
+  <Router />,
   document.getElementById('root')
 );
 
