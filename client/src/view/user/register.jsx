@@ -22,9 +22,6 @@ class Register extends Component {
     // this.doSetData = this.doSetData.bind(this)
   }
   doSetData(msg, e) {
-    // this.setState({
-    //   mobile: e
-    // })
     switch(msg) {
       case 'mobile':
         this.setState({

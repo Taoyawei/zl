@@ -12,6 +12,35 @@ import {
   Button
 } from 'antd-mobile'
 class Modify extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      mobile: null,
+      password: null,
+      newPassword: null
+    }
+  }
+  doGetInfo (msg, e) {
+    switch(msg) {
+      case 'mobile':
+        this.setState({
+          mobile: e
+        })
+        break
+      case 'password':
+        this.setState({
+          mobile: e
+        })
+        break
+      case 'newPassword':
+        this.setState({
+          newPassword: e
+        })
+        break
+      default:
+        console.log('错了')
+    }
+  }
   render(){
     return (
       <div className="register">
@@ -30,6 +59,7 @@ class Modify extends Component {
                   value={this.state.mobile}
                   placeholder="请输入手机号"
                   maxLength={11}
+                  onChange={this.doGetInfo.bind(this, 'mobile')}
                   />
                 <span className="mobile-icon">
                   <Icon style={{width: '20px', height: '20px', color: '#ffffff'}} type="iconshouji" />
@@ -41,9 +71,11 @@ class Modify extends Component {
                 <InputItem
                   clear
                   className="register-mobile"
-                  value={this.state.nickName}
+                  value={this.state.password}
                   placeholder="老密码"
                   maxLength={32}
+                  type="password"
+                  onChange={this.doGetInfo.bind(this, 'password')}
                 />
                 <span className="mobile-icon">
                   <Icon style={{width: '20px', height: '20px', color: '#ffffff'}} type="iconyonghu" />
@@ -51,14 +83,15 @@ class Modify extends Component {
               </div>
             </List.Item>
             <List.Item>
-              <div className="content-item">
+              <div className="content-items">
                 <InputItem
                   clear
                   className="register-mobile"
-                  value={this.state.password}
+                  value={this.state.newPassword}
                   placeholder="请设置新密码"
                   maxLength={6}
                   type="password"
+                  onChange={this.doGetInfo.bind(this, 'newPassword')}
                 />
                 <span className="mobile-icon">
                   <Icon style={{width: '20px', height: '20px', color: '#ffffff'}} type="iconmima" />

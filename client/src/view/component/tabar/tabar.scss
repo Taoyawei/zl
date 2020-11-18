@@ -1,0 +1,13 @@
+@import '../../../index.scss';
+.tabar {
+  width: Px(750);
+  height: Px(100);
+  .tabar-box {
+    width: 100%;
+    height: Px(100);
+    background: red;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+  }
+}

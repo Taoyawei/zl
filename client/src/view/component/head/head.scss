@@ -1,0 +1,38 @@
+@import '../../../index.scss';
+.head{
+  width: Px(750);
+  height: Px(88);
+  .head-box {
+    width: 100%;
+    height: Px(88);
+    // border: 1px solid red;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .header-left {
+      width: Px(84);
+      height: Px(88);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .header-center {
+      flex: 1;
+      height: Px(88);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: Px(32);
+      color: #333333;
+      font-weight: 500;
+    }
+    .header-right {
+      width: Px(84);
+      height: Px(88);
+      // border: 1px solid blue;
+    }
+  }
+}

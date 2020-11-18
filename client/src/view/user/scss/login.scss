@@ -44,9 +44,28 @@
         top: 17px;
         left: 1px;
       }
+      
+    }
+    .content-items {
+      position: relative;
+      height: Px(80);
+      // margin-top: Px(18);
+      .register-mobile {
+        background: none;
+        border-bottom: 1px solid #ffffff;
+        padding-left: 24px;
+      }
+      .mobile-icon {
+        position: absolute;
+        top: 17px;
+        left: 1px;
+      }
+      /deep/.am-input-control {
+        margin-top: 10px;
+      }
     }
   }
-  .register-btn {
+  .login-btn {
     width: 100%;
     margin-top: Px(180);
     // border: 1px solid red;
@@ -54,11 +73,11 @@
       width: 100%;
       height: Px(70);
       color: #ffffff;
-      background: none!important;
+      background: #01cd9a!important;
       line-height: Px(70);
       font-size: Px(18);
       // border: 1px solid red!important;
-      border: 1px solid #ffffff!important;
+      border: none!important;
       border-radius: 8px;
       span {
         font-size: Px(29);
@@ -69,6 +88,9 @@
 .register .register-content .content-item .register-mobile input[type="text"] {
   margin-top: 14px!important;
 }
+// .am-input-control {
+//   margin-top: 10px;
+// }
 .am-list-item .am-input-control input {
   color: #ffffff;
   font-size: Px(18);

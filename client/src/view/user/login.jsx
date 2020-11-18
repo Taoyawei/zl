@@ -12,6 +12,30 @@ import {
   Button
 } from 'antd-mobile'
 class Login extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      mobile: null,
+      password: null
+    }
+  }
+  doGetInfo (msg, e) {
+    switch(msg) {
+      case 'mobile':
+        this.setState({
+          mobile: e
+        })
+        break
+      case 'password':
+        this.setState({
+          password: e
+        })
+        break
+      default:
+        console.log('错了')
+        break
+    }
+  }
   render(){
     return (
       <div className="register">
@@ -30,29 +54,15 @@ class Login extends Component {
                   value={this.state.mobile}
                   placeholder="请输入手机号"
                   maxLength={11}
+                  onChange={this.doGetInfo.bind(this, 'mobile')}
                   />
                 <span className="mobile-icon">
                   <Icon style={{width: '20px', height: '20px', color: '#ffffff'}} type="iconshouji" />
                 </span>
               </div>
             </List.Item>
-            {/* <List.Item>
-              <div className="content-item">
-                <InputItem
-                  clear
-                  className="register-mobile"
-                  value={this.state.nickName}
-                  placeholder="请设置昵称"
-                  maxLength={32}
-                  onChange={this.doSetData.bind(this, 'nickName')}
-                />
-                <span className="mobile-icon">
-                  <Icon style={{width: '20px', height: '20px', color: '#ffffff'}} type="iconyonghu" />
-                </span>
-              </div>
-            </List.Item> */}
             <List.Item>
-              <div className="content-item">
+              <div className="content-items">
                 <InputItem
                   clear
                   className="register-mobile"
@@ -60,6 +70,7 @@ class Login extends Component {
                   placeholder="请设置密码"
                   maxLength={6}
                   type="password"
+                  onChange={this.doGetInfo.bind(this, 'password')}
                 />
                 <span className="mobile-icon">
                   <Icon style={{width: '20px', height: '20px', color: '#ffffff'}} type="iconmima" />

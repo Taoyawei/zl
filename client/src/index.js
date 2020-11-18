@@ -6,11 +6,17 @@ import './index.scss';
 // import Login from './view/login/login.jsx'
 // import reportWebVitals from './reportWebVitals';
 import Router from './router/router.js'
-
+import { Provider } from 'react-redux'
+import store from './store/index.js'
+import Head from './view/component/head/head.jsx'
+import Tabar from './view/component/tabar/tabar.js'
+// <Head />
 ReactDOM.render(
-  // <React.StrictMode>
-  // </React.StrictMode>,
-  <Router />,
+  <Provider store={store}>
+    <Head />
+    <Router />
+    <Tabar />
+  </Provider>,
   document.getElementById('root')
 );
 
