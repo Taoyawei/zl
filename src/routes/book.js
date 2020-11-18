@@ -9,7 +9,9 @@ const {
   updataBook,
   setBook,
   getCollection,
-  getDateBook
+  getDateBook,
+  getBookInfo,
+  collectionBook
 } = require('../controller/book.js')
 
 // 上传图书
@@ -38,6 +40,23 @@ router.post('/date/book', async (ctx, next) => {
   ctx.body = await getDateBook({
     startDate,
     endDate
+  })
+})
+
+// 根据书籍id获取书籍信息
+router.post('/bookInfo', loginCheck, async (ctx, next) => {
+  const { book_id } = ctx.request.body
+  ctx.body = await getBookInfo({book_id})
+})
+
+// 收藏图书路由
+router.post('/collection', loginCheck, async (ctx, next) => {
+  const {book_name, author, user_id, updata_id} = ctx.request.body
+  ctx.body = await collectionBook({
+    book_name,
+    author,
+    user_id,
+    updata_id
   })
 })
 module.exports = router

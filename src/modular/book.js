@@ -2,9 +2,11 @@
  * @abstract 关于图书的操作
  * @author taoyawei
  */
-const { Book_lists, Collections } = require('../db/model/index.js')
+const { Book_lists, Collections, Comments } = require('../db/model/index.js')
 const {dateTrans} = require('../utils/utils.js')
 const {Op} = require('sequelize')
+const fs = require('fs')
+const path = require('path')
 /**
  * 保存图书信息
  * @param {string} book_name 书名
@@ -66,13 +68,101 @@ async function doGetDateBook ({startDate, endDate}) {
         }
       }
     })
-    console.log('***********')
-    console.log(result)
-    if (result) return result
-    else return []
+    // if (result) return result
+    // else return []
+    if (result instanceof Array) {
+      return result
+    } else {
+      return result ? result.dataValues : []
+    }
   } catch(err) {
-    // console.log('**********')
+    return {
+      error: err && err.errors ? err.errors[0].message : '链接错误'
+    }
+  }
+}
+
+/**
+ * 根据图书id获取图书完全信息
+ * @param {string} book_id 图书id
+ */
+async function doGetBookInfo (book_id) {
+  try {
+    const result = await Book_lists.findOne({
+      attributes: ['id', 'author', 'book_name', 'read_number', 'comment_number', 'collection_number', 'circle_id', 'user_id'],
+      where: {
+        id: book_id
+      },
+      include:[{
+        model: Comments,
+        attributes: ['id', 'create_time', 'content', 'like_number', 'user_id', 'book_id']
+      }]
+    })
+    let data = null
+    if (result instanceof Array) {
+      data = result
+    } else {
+      data = result ? result.dataValues : []
+    }
+    if (!(data instanceof Array)) {
+      const fileList = []
+      let filepath = 'public/upload/总结&3.txt'
+      const files = fs.readdirSync('public/upload')
+      files.forEach((item) => {
+        fileList.push(item)
+      })
+      fileList.forEach((res) => {
+        const arr = JSON.parse(JSON.stringify(res.split('.')[0].split('&')))
+        if (Number(arr[1]) === data.user_id && arr[0] === data.book_name) {
+          filepath = `public/upload/${res}`
+        }
+      })
+      const content = fs.readFileSync(filepath).toString()
+      data.content = content
+    }
+    return data
+  } catch(err) {
     console.log(err)
+    return {
+      error: err && err.errors ? err.error[0].message : '链接错误'
+    }
+  }
+}
+
+/**
+ * 收藏书本
+ * @param {string} book_name 书名
+ * @param {string} author 作者
+ * @param {int} user_id 收藏用户id
+ * @param {int} updata_id 上传用户id
+ */
+async function doCollectionBook ({book_name, author, user_id, updata_id}) {
+  try {
+    // 先查询再存储
+    const findValue = await Collections.findOne({
+      where: {
+        book_name,
+        user_id
+      }
+    })
+    if (findValue) {
+      const data = {
+        error: '此书已经被收藏'
+      }
+      return data
+    }
+    const result = await Collections.create({
+      book_name,
+      author,
+      user_id,
+      updata_id
+    })
+    if (result instanceof Array) {
+      return result
+    } else {
+      return result ? result.dataValues : {}
+    }
+  } catch(err) {
     return {
       error: err && err.errors ? err.errors[0].message : '链接错误'
     }
@@ -81,5 +171,7 @@ async function doGetDateBook ({startDate, endDate}) {
 module.exports = {
   doSetBook,
   doGetCollection,
-  doGetDateBook
+  doGetDateBook,
+  doGetBookInfo,
+  doCollectionBook
 }

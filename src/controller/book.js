@@ -7,7 +7,9 @@ const { get } = require('../redis/index.js')
 const {
   doSetBook,
   doGetCollection,
-  doGetDateBook
+  doGetDateBook,
+  doGetBookInfo,
+  doCollectionBook
 } = require('../modular/book.js')
 const {
   SuccessModal, ErrorModal
@@ -92,9 +94,54 @@ async function getDateBook ({startDate, endDate}) {
     return new SuccessModal(result)
   }
 }
+
+/**
+ * 获取书籍信息
+ * @param {string} book_id 图书id
+ */
+async function getBookInfo ({book_id}) {
+  const result = await doGetBookInfo(book_id)
+  if (!result) {
+    return new ErrorModal(requestFind)
+  } else if (result && result.error) {
+    return new ErrorModal({
+      code: 2006,
+      message: result.error
+    })
+  } else {
+    return new SuccessModal(result)
+  }
+}
+
+/**
+ * 收藏图书
+ * @param {string} book_name 书名
+ * @param {string} author 作者
+ * @param {int} user_id 收藏用户id
+ * @param {int} updata_id 上传图书用户的id
+ */
+async function collectionBook ({book_name, author, user_id, updata_id}) {
+  if (!book_name || !author || !user_id || !updata_id) return new ErrorModal(requestParams)
+  const result = await doCollectionBook({
+    book_name,
+    author,
+    user_id,
+    updata_id
+  })
+  if (result && result.error) {
+    return new ErrorModal({
+      code: 2007,
+      message: result.error
+    })
+  } else {
+    return new SuccessModal()
+  }
+}
 module.exports = {
   updataBook,
   setBook,
   getCollection,
-  getDateBook
+  getDateBook,
+  getBookInfo,
+  collectionBook
 }
