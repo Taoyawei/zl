@@ -28,10 +28,21 @@ const Comments = seq.define('comments', {
     allowNull: false,
     comment: '用户id，不能为空'
   },
+  user_name: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    comment: '用户名'
+  },
   book_id: {
     type: Sequelize.INTEGER,
     allowNull: false,
     comment: '书单id，不能为空'
+  },
+  reply_number: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+    comment: '评论回复的条数'
   }
 })
 module.exports = Comments

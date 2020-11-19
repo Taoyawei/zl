@@ -64,6 +64,8 @@ async function setLogin ({ ctx, mobile, password }) {
   const result = await getUser(mobile, doCrypto(password))
   if (!result) return new ErrorModal(registerUserNameNotExistInfo)
   
+  // 删除缓存中的登陆信息
+  set('userInfo', null, 1)
   // 将登录信息存入redis
   const info = await get('userInfo')
   if (!info) set('userInfo', result, 24*60*60*1000)

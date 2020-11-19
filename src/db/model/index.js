@@ -9,6 +9,7 @@ const Comments = require('./comment.js')
 const User_circle = require('./user_circle.js')
 const Fans = require('./fans.js')
 const Collections = require('./collection.js')
+const Reply = require('./reply.js')
 
 /**
  * 用户与书之间的关系，是一对多的关系
@@ -46,9 +47,18 @@ Comments.belongsTo(Users, { // 一条评论对应一个用户
 Book_lists.hasMany(Comments, {
   foreignKey: 'book_id'
 })
-
 Comments.belongsTo(Book_lists, {
   foreignKey: 'book_id'
+})
+
+/**
+ * 评论与回复直接的关系，一对多
+ */
+Comments.hasMany(Reply, {
+  foreignKey: 'comment_id'
+})
+Reply.belongsTo(Comments, {
+  foreignKey: 'comment_id'
 })
 
 /**
@@ -107,5 +117,6 @@ module.exports = {
   Comments,
   Fans,
   User_circle,
-  Collections
+  Collections,
+  Reply
 }

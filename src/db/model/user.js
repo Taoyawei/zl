@@ -14,7 +14,7 @@ const Users = seq.define('users', {
   },
   nickName: {
     type: Sequelize.STRING(64),
-    allowNull: true,
+    allowNull: false,
     comment: '昵称'
   },
   fans_number: {
