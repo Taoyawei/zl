@@ -1,0 +1,10 @@
+@import '../../index.scss';
+.home {
+  position: relative;
+  height: 1000px;
+  .home-footer {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+  }
+}

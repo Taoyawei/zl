@@ -8,12 +8,15 @@ import {
   Route,
   BrowserRouter
 } from 'react-router-dom'
+import Head from '../view/component/head/head.jsx'
+import Tabar from '../view/component/tabar/tabar.js'
 import config from './config.js'
 
 class Router extends Component {
   render () {
     return(
       <BrowserRouter>
+        <Route name="Head" component={Head} />
         <Switch>
           {
             config.map((item, index) => {
@@ -29,6 +32,7 @@ class Router extends Component {
             })
           }
         </Switch>
+        <Route name="Tabar" component={Tabar} />
       </BrowserRouter>
     )
   }

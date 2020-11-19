@@ -88,15 +88,12 @@
 .register .register-content .content-item .register-mobile input[type="text"] {
   margin-top: 14px!important;
 }
-// .am-input-control {
-//   margin-top: 10px;
-// }
 .am-list-item .am-input-control input {
   color: #ffffff;
   font-size: Px(18);
 }
 a.am-button.register-button::before {
-  border: none!important;
+  content: none!important;
   // border: none;
 }
 .am-list-body {
@@ -106,11 +103,14 @@ a.am-button.register-button::before {
   background: none;
 }
 .am-list-body::before {
- z-index: -2!important;
+  content: none!important;
+  z-index: -2!important;
 }
 .am-list-body::after {
+  content: none!important;
   z-index: -2!important;
  }
 .am-list-line::after {
+  content: none!important;
   z-index: -1!important;
 }

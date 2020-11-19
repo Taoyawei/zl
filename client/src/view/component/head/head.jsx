@@ -13,9 +13,13 @@ class Head extends Component {
       <div className="head">
         <div className="head-box" style={{background: this.props.info.color}}>
           <div className="header-left">
-            <Icon type="iconlujing39" style={{width: '20px', height: '35px', color: '#333333'}} />
+            {
+              this.props.info.isgo ?
+               <Icon type="iconlujing39" style={{width: '20px', height: '35px', color: '#333333'}} /> :
+               <span></span>
+            }
           </div>
-          <div className="header-center">首页</div>
+          <div className="header-center">{this.props.info.title}</div>
           <div className="header-right"></div>
         </div>
       </div>

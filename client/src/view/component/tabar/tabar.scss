@@ -9,5 +9,9 @@
     position: fixed;
     bottom: 0px;
     left: 0px;
+    display: flex;
+    /deep/.am-tab-bar {
+      width: 100%;
+    }
   }
 }

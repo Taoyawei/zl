@@ -16,6 +16,7 @@ const reducer = (state=defaultValue, action={}) => {
       break
     case 'urlDelete':
       newState.urlInfo = []
+      newState.urlInfo.push(action.value)
       break
     default:
       console.log('不操作')

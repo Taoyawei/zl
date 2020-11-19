@@ -4,6 +4,7 @@
  */
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import './index.scss'
 class Home extends Component {
   constructor (props) {
     super(props)
@@ -11,8 +12,9 @@ class Home extends Component {
   }
   render () {
     return (
-      <div>
+      <div className="home">
         我是首页
+        <div className="home-footer">我是底部</div>
       </div>
     )
   }
@@ -28,7 +30,8 @@ const mapDispatchToProps = (dispatch) => {
         value: {
           url: '/',
           title: '首页',
-          color: '#ffffff'
+          color: '#ffffff',
+          isgo: false
         }
       }
       dispatch(action)
