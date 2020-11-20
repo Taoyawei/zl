@@ -7,7 +7,10 @@ const {loginCheck} = require('../utils/loginCheck.js')
 const {
   addComment,
   addReply,
-  getComment
+  getComment,
+  getReply,
+  dotGive,
+  deleteLike
 } = require('../controller/comments.js')
 
 // 添加评论,不是回复
@@ -40,4 +43,25 @@ router.post('/getComment', loginCheck, async (ctx, next) => {
   ctx.body = await getComment({book_id, pageSize, pageNo})
 })
 
+// 根据评论的id获取回复，分页
+router.post('/getreply', loginCheck, async (ctx, next) => {
+  const { comment_id, pageSize, pageNo } = ctx.request.body
+  ctx.body = await getReply({
+    comment_id,
+    pageSize,
+    pageNo
+  })
+})
+
+// 点赞
+router.post('/give', loginCheck, async (ctx, next) => {
+  const { comment_id } = ctx.request.body
+  ctx.body = await dotGive(comment_id)
+})
+
+// 取消点赞
+router.post('/delete/like', loginCheck, async (ctx, next) => {
+  const { comment_id } = ctx.request.body
+  ctx.body = await deleteLike(comment_id)
+})
 module.exports = router

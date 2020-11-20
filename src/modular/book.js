@@ -7,6 +7,7 @@ const {dateTrans} = require('../utils/utils.js')
 const {Op} = require('sequelize')
 const fs = require('fs')
 const path = require('path')
+const { resultHandle } = require('../utils/utils.js')
 /**
  * 保存图书信息
  * @param {string} book_name 书名
@@ -22,7 +23,7 @@ async function doSetBook ({book_name, author, user_id}) {
       user_id,
       createAt: date
     })
-    return result
+    return resultHandle(result)
   } catch(err) {
     // console.log('/////')
     console.log(err)
@@ -43,8 +44,7 @@ async function doGetCollection (user_id) {
         user_id
       }
     })
-    if (result.dataValues) return result.dataValues
-    else return []
+    return resultHandle(result)
   } catch(err) {
     return {
       error: err && err.errors ? err.errors[0].message : '链接错误'
@@ -70,11 +70,7 @@ async function doGetDateBook ({startDate, endDate}) {
     })
     // if (result) return result
     // else return []
-    if (result instanceof Array) {
-      return result
-    } else {
-      return result ? result.dataValues : []
-    }
+    return resultHandle(result)
   } catch(err) {
     return {
       error: err && err.errors ? err.errors[0].message : '链接错误'
@@ -157,11 +153,7 @@ async function doCollectionBook ({book_name, author, user_id, updata_id}) {
       user_id,
       updata_id
     })
-    if (result instanceof Array) {
-      return result
-    } else {
-      return result ? result.dataValues : {}
-    }
+    return resultHandle(result)
   } catch(err) {
     return {
       error: err && err.errors ? err.errors[0].message : '链接错误'

@@ -10,6 +10,7 @@ const User_circle = require('./user_circle.js')
 const Fans = require('./fans.js')
 const Collections = require('./collection.js')
 const Reply = require('./reply.js')
+const Likes = require('./like.js')
 
 /**
  * 用户与书之间的关系，是一对多的关系
@@ -61,6 +62,15 @@ Reply.belongsTo(Comments, {
   foreignKey: 'comment_id'
 })
 
+/**
+ * 评论与点赞之间关联，一对多
+ */
+Comments.hasMany(Likes, {
+  foreignKey: 'comment_id'
+})
+Likes.belongsTo(Comments, {
+  foreignKey: 'comment_id'
+})
 /**
  * 用户和圈子之间的关系分为两种，创建关系和加入关系
  * 创建关系：一个用户可以创建，多个圈子，但一个圈子只能由一个用户创建
@@ -118,5 +128,6 @@ module.exports = {
   Fans,
   User_circle,
   Collections,
-  Reply
+  Reply,
+  Likes
 }

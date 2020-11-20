@@ -15,6 +15,15 @@ function dateTrans (val) {
   return `${year}-${month > 9 ? month : '0' + month}-${day > 9 ? day : '0' + day} ${hour > 9 ? hour : '0' + hour}:${minutes > 9 ? minutes : '0' + minutes}:${s > 9 ? s : '0' + s}`
 }
 
+// 接口返回统一处理
+function resultHandle (result) {
+  if (result instanceof Array) {
+    return result
+  } else {
+    return result ? result.dataValues : []
+  }
+}
 module.exports = {
-  dateTrans
+  dateTrans,
+  resultHandle
 }

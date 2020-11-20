@@ -5,6 +5,7 @@
 const { Users } = require('../db/model/index.js')
 const { get } = require('../redis/index.js')
 const doCrypto = require('../utils/cryp.js')
+const { resultHandle } = require('../utils/utils.js')
 /**
  * 获取用户
  * @param {string} mobile 手机号码
@@ -21,8 +22,7 @@ async function getUser (mobile, password) {
     attributes: ['id', 'mobile', 'nickName', 'head', 'fans_number', 'integral'], // 返回的字段
     where: whereopt // 查询条件
   })
-  if (!result) return result
-  return result.dataValues
+  return resultHandle(result)
 }
 
 /**
@@ -37,7 +37,7 @@ async function createUser ({mobile, nickName, password}) {
     nickName,
     password
   })
-  return result.dataValues
+  return resultHandle(result)
 }
 
 /**
@@ -59,8 +59,7 @@ async function domodify ({mobile, password, newPassword}) {
     const result = await Users.update(item, {
       where: whereopt
     })
-    console.log('0')
-    return result
+    return resultHandle(result)
   } catch(err) {
     console.log(err)
     return false
