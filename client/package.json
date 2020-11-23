@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.1.10",
     "antd-mobile": "^2.3.4",
     "babel-plugin-import": "^1.13.1",
+    "css-loader": "^5.0.1",
     "customize-cra": "^1.0.0",
     "node-sass": "4.14.1",
     "react": "^17.0.1",
@@ -20,6 +21,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "sass-loader": "^10.1.0",
+    "style-loader": "^2.0.0",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

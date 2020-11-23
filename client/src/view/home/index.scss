@@ -1,10 +1,119 @@
-@import '../../index.scss';
+// @import '../../index.scss';
+@function Px($px) {
+  @return $px/750 * 10rem
+};
 .home {
   position: relative;
-  height: 1000px;
-  .home-footer {
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
+  .home-header {
+    width: Px(750);
+    height: Px(120);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    .header-input {
+      width: Px(630);
+      height: Px(60);
+      outline: none;
+      border: none;
+      background: none;
+      border-radius: Px(30);
+      padding-left: Px(60);
+      background: #f5f6f8;
+      color: #adb3bd;
+    }
+    .header-icon {
+      position: absolute;
+      top: Px(48);
+      left: Px(50);
+      width: Px(32);
+      height: Px(32);
+      // border: 1px solid red;
+    }
+  }
+  .header-bg {
+    width: Px(690);
+    height: Px(267);
+    margin: 0 auto;
+    background: url('./image/header.jpg') no-repeat center / 100% 100%;
+    // border: 1px solid red;
+    border-radius: Px(20)
+  }
+  .home-collection {
+    width: Px(750);
+    .home-collection-title {
+      width: Px(750);
+      height: Px(120);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .title {
+        font-size: Px(30);
+        color: #333333;
+        font-weight: 600;
+        margin-left: Px(30);
+      }
+      .btn {
+        font-size: Px(14);
+        color: #999999;
+        margin-right: Px(30);
+      }
+    }
+    .home-collection-content {
+      width: Px(690);
+      // border: 1px solid red;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      .item {
+        width: Px(155);
+        height: Px(325);
+        // border: 1px solid red;
+        display: flex;
+        flex-direction: column;
+        .item-book {
+          width: Px(155);
+          height: Px(215);
+          background: url('./image/book_bg.jpg') no-repeat center / 100% 100%;
+          .item-book-title {
+            width: 100%;
+            text-align: center;
+            font-size: Px(24);
+            color: #333333;
+            margin-top: Px(30);
+          }
+          .item-book-author {
+            width: 100%;
+            font-size: Px(16);
+            color: #333333;
+            text-align: right;
+            margin-top: Px(20);
+          }
+        }
+        .item-name{
+          width: 100%;
+          height: Px(110);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: Px(28);
+          color: #333333;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+  .higt-book {
+    width: Px(690);
+    margin: 0 auto;
+    .hight-header {
+      width: 100%;
+      height: Px(120);
+      line-height: Px(120);
+      font-size: Px(30);
+      color: #333333;
+      font-weight: 600;
+      // margin-left: Px(30);
+    }
   }
 }
