@@ -9,7 +9,8 @@ const {
   doGetCollection,
   doGetDateBook,
   doGetBookInfo,
-  doCollectionBook
+  doCollectionBook,
+  doAddCircle
 } = require('../modular/book.js')
 const {
   SuccessModal, ErrorModal
@@ -137,11 +138,30 @@ async function collectionBook ({book_name, author, user_id, updata_id}) {
     return new SuccessModal()
   }
 }
+
+/**
+ * 图书添加到圈子里面
+ * @param {int} circle_id 圈子id
+ * @param {int} id 图书id
+ */
+async function addCircle(circle_id, id) {
+  if (!circle_id) return new ErrorModal(requestParams)
+  const result = await doAddCircle(circle_id, id)
+  if (result && result.error) {
+    return new ErrorModal({
+      code: 2008,
+      message: result.error
+    })
+  } else {
+    return new SuccessModal()
+  }
+}
 module.exports = {
   updataBook,
   setBook,
   getCollection,
   getDateBook,
   getBookInfo,
-  collectionBook
+  collectionBook,
+  addCircle
 }

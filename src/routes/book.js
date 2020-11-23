@@ -11,7 +11,8 @@ const {
   getCollection,
   getDateBook,
   getBookInfo,
-  collectionBook
+  collectionBook,
+  addCircle
 } = require('../controller/book.js')
 
 // 上传图书
@@ -58,5 +59,11 @@ router.post('/collection', loginCheck, async (ctx, next) => {
     user_id,
     updata_id
   })
+})
+
+// 图书加入圈子
+router.post('/add/circle', loginCheck, async (ctx, next) => {
+  const {circle_id, id} = ctx.request.body
+  ctx.body = await addCircle(circle_id, id)
 })
 module.exports = router

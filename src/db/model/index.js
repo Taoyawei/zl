@@ -6,7 +6,7 @@ const Users = require('./user.js')
 const Book_lists = require('./book_list.js')
 const Circle = require('./circle.js')
 const Comments = require('./comment.js')
-const User_circle = require('./user_circle.js')
+// const User_circle = require('./user_circle.js')
 const Fans = require('./fans.js')
 const Collections = require('./collection.js')
 const Reply = require('./reply.js')
@@ -126,7 +126,7 @@ module.exports = {
   Circle,
   Comments,
   Fans,
-  User_circle,
+  // User_circle,
   Collections,
   Reply,
   Likes

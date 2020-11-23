@@ -8,6 +8,8 @@ const {Op} = require('sequelize')
 const fs = require('fs')
 const path = require('path')
 const { resultHandle } = require('../utils/utils.js')
+const { ErrorModal } = require('../utils/response.js')
+const { requestParams } = require('../utils/errorInfo.js')
 /**
  * 保存图书信息
  * @param {string} book_name 书名
@@ -160,10 +162,44 @@ async function doCollectionBook ({book_name, author, user_id, updata_id}) {
     }
   }
 }
+
+/**
+ * 图书添加到圈子
+ * @param {int} circle_id 圈子id
+ * @param {int} id 图书id
+ */
+async function doAddCircle (circle_id, id) {
+  try {
+    const info = await Book_lists.findOne({
+      where: {
+        circle_id,
+        id
+      }
+    })
+    if (info) return {
+      error: '本书已经存在该圈子'
+    }
+    const item = {
+      circle_id
+    }
+    const result = await Book_lists.update(item, {
+      where: {
+        id
+      }
+    })
+    console.log(result)
+    return resultHandle(result)
+  } catch(err) {
+    return {
+      error: err.errors ? err.errors[0].message : '链接错误'
+    }
+  }
+}
 module.exports = {
   doSetBook,
   doGetCollection,
   doGetDateBook,
   doGetBookInfo,
-  doCollectionBook
+  doCollectionBook,
+  doAddCircle
 }
