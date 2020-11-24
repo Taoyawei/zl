@@ -115,5 +115,63 @@
       font-weight: 600;
       // margin-left: Px(30);
     }
+    .hight-item {
+      width: 100%;
+      height: Px(215);
+      margin-bottom: Px(80);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .hight-item-left {
+        width: Px(160);
+        height: Px(215);
+        // border: 1px solid blue;
+        img {
+          width: Px(160);
+          height: Px(215);
+        }
+      }
+      .hight-item-right {
+        width: Px(425);
+        padding-left: Px(35);
+        height: Px(215);
+        display: flex;
+        flex-wrap: wrap;
+        // flex-direction: column;
+        // border: 1px solid red;
+        .item-right-title {
+          width: 100%;
+          font-size: Px(36);
+          color: #000000;
+          font-weight: 600;
+        }
+        .item-right-author {
+          width: 100%;
+          font-size: Px(24);
+          color: #666666;
+          margin: Px(35) 0;
+        }
+        .item-right-number {
+          width: 100%;
+          align-self: flex-end;
+          display: flex;
+          justify-content: space-between;
+          .number-collection {
+            font-size: Px(24);
+            color: #999999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+          .number-comment {
+            font-size: Px(24);
+            color: #999999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
+      }
+    }
   }
 }

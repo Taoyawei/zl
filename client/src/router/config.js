@@ -9,6 +9,9 @@ import Modify from '../view/user/modify.jsx' // 修改密码
 import Circle from '../view/circle/index.jsx' // 圈子
 import List from '../view/list/index.jsx' // 榜单
 import My from '../view/my/index.jsx' // 我的
+
+import Collection from '../view/collection/index.jsx' // 我的收藏
+import Detail from '../view/detail/index.jsx' // 书本详情
 const config = [
   {
     path: '/',
@@ -51,6 +54,18 @@ const config = [
     name: 'My',
     title: '我的',
     component: My
+  },
+  {
+    path: '/collection',
+    name: 'Collection',
+    title: '收藏',
+    component: Collection
+  },
+  {
+    path: '/detail',
+    name: 'Detail',
+    title: '详情',
+    component: Detail
   }
 ]
 export default config

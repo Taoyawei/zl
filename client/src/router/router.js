@@ -8,8 +8,8 @@ import {
   Route,
   BrowserRouter
 } from 'react-router-dom'
-import Head from '../view/component/head/head.jsx'
-import Tabar from '../view/component/tabar/tabar.js'
+import Head from '../component/head/head.jsx'
+import Tabar from '../component/tabar/tabar.js'
 import config from './config.js'
 
 class Router extends Component {

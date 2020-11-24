@@ -5,7 +5,7 @@
 import React, { Component } from 'react'
 import Shar from './shar.jsx'
 import './scss/register.scss'
-import Icon from '../component/icon/icon.js'
+import Icon from '../../component/icon/icon.js'
 import {
   List,
   InputItem,

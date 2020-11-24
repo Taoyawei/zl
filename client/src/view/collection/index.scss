@@ -1,0 +1,27 @@
+@function Px($px) {
+  @return $px/750 * 10rem
+}
+.collection-box {
+  width: Px(750);
+  display: flex;
+  // justify-content: space-between;
+  flex-wrap: wrap;
+  .box-item {
+    width: Px(162.5);
+    height:Px(325);
+    margin-left: Px(20);
+    margin-top: Px(20);
+    .item-img {
+      width: Px(162.5);
+      height: Px(215);
+    }
+    .item-name {
+      width: Px(162.5);
+      height: Px(100);
+      padding-top: Px(10);
+      font-size: Px(18);
+      color: #333333;
+      text-align: center;
+    }
+  }
+}

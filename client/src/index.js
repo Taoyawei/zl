@@ -8,8 +8,6 @@ import './index.scss';
 import Router from './router/router.js'
 import { Provider } from 'react-redux'
 import store from './store/index.js'
-// import Head from './view/component/head/head.jsx'
-// import Tabar from './view/component/tabar/tabar.js'
 // <Head />
 ReactDOM.render(
   <Provider store={store}>
