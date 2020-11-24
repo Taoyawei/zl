@@ -18,6 +18,11 @@ const Collections = seq.define('collections', {
     unique: true,
     comment: '被收藏书的作者，不能为空，唯一'
   },
+  book_id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    comment: '图书id，不能为空'
+  },
   user_id: {
     type: Sequelize.INTEGER,
     allowNull: false,

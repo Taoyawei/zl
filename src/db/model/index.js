@@ -75,12 +75,12 @@ Likes.belongsTo(Comments, {
  * 用户和圈子之间的关系分为两种，创建关系和加入关系
  * 创建关系：一个用户可以创建，多个圈子，但一个圈子只能由一个用户创建
  */
-Users.hasMany(Circle, {
-  foreignKey: 'create_id',
-})
-Circle.belongsTo(Users, {
-  foreignKey: 'create_id'
-})
+// Users.hasMany(Circle, {
+//   foreignKey: 'create_id',
+// })
+// Circle.belongsTo(Users, {
+//   foreignKey: 'create_id'
+// })
 
 /** 
 * 加入关系：一个用户可以加入多个圈子，一个圈子也可以有多个用户，多对多

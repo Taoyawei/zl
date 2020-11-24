@@ -10,7 +10,8 @@ const {
   doGetDateBook,
   doGetBookInfo,
   doCollectionBook,
-  doAddCircle
+  doAddCircle,
+  doCancleBook
 } = require('../modular/book.js')
 const {
   SuccessModal, ErrorModal
@@ -121,9 +122,10 @@ async function getBookInfo ({book_id}) {
  * @param {int} user_id 收藏用户id
  * @param {int} updata_id 上传图书用户的id
  */
-async function collectionBook ({book_name, author, user_id, updata_id}) {
+async function collectionBook ({book_id, book_name, author, user_id, updata_id}) {
   if (!book_name || !author || !user_id || !updata_id) return new ErrorModal(requestParams)
   const result = await doCollectionBook({
+    book_id,
     book_name,
     author,
     user_id,
@@ -156,6 +158,24 @@ async function addCircle(circle_id, id) {
     return new SuccessModal()
   }
 }
+
+/**
+ * 取消收藏图书
+ * @param {int} book_id 图书id
+ * @param {int} user_id 收藏用户id
+ */
+async function cancleBook (book_id, user_id) {
+  if (!book_id) return new ErrorModal(requestParams)
+  const result = await doCancleBook(book_id, user_id)
+  if (result && result.error) {
+    return new ErrorModal({
+      code: 2009,
+      message: result.error
+    })
+  } else {
+    return new SuccessModal()
+  }
+}
 module.exports = {
   updataBook,
   setBook,
@@ -163,5 +183,6 @@ module.exports = {
   getDateBook,
   getBookInfo,
   collectionBook,
-  addCircle
+  addCircle,
+  cancleBook
 }

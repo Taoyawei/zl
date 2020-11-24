@@ -12,7 +12,8 @@ const {
   getDateBook,
   getBookInfo,
   collectionBook,
-  addCircle
+  addCircle,
+  cancleBook
 } = require('../controller/book.js')
 
 // 上传图书
@@ -52,8 +53,9 @@ router.post('/bookInfo', loginCheck, async (ctx, next) => {
 
 // 收藏图书路由
 router.post('/collection', loginCheck, async (ctx, next) => {
-  const {book_name, author, user_id, updata_id} = ctx.request.body
+  const {book_id, book_name, author, user_id, updata_id} = ctx.request.body
   ctx.body = await collectionBook({
+    book_id,
     book_name,
     author,
     user_id,
@@ -61,6 +63,11 @@ router.post('/collection', loginCheck, async (ctx, next) => {
   })
 })
 
+// 取消收藏
+router.post('/cancle/collection', loginCheck, async (ctx, next) => {
+  const {book_id, user_id} = ctx.request.body
+  ctx.body = await cancleBook(book_id, user_id)
+})
 // 图书加入圈子
 router.post('/add/circle', loginCheck, async (ctx, next) => {
   const {circle_id, id} = ctx.request.body

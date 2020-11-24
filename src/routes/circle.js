@@ -9,7 +9,10 @@ const {
   createCricle,
   findCircle,
   getBook,
-  addCircle
+  addCircle,
+  getUser,
+  getCircle,
+  deleteCircle
 } = require('../controller/circle.js')
 
 // 创建圈子
@@ -42,5 +45,23 @@ router.post('/add/user', loginCheck, async (ctx, next) => {
 })
 
 // 根据圈子获取圈子里面的用户
+router.post('/getUser', loginCheck, async (ctx, next) => {
+  const {circle_id} = ctx.request.body
+  ctx.body = await getUser(circle_id)
+})
+
 // 根据用户id获取圈子
+router.post('/getCircle', loginCheck, async (ctx, next) => {
+  const {user_id} = ctx.request.body
+  ctx.body = await getCircle(user_id)
+})
+
+// 删除圈子
+router.post('/deleteCircle', loginCheck, async (ctx, next) =>{
+  const { create_id, circle_id} = ctx.request.body
+  ctx.body = await deleteCircle({
+    create_id,
+    circle_id
+  })
+})
 module.exports = router

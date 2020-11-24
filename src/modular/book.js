@@ -134,8 +134,16 @@ async function doGetBookInfo (book_id) {
  * @param {int} user_id 收藏用户id
  * @param {int} updata_id 上传用户id
  */
-async function doCollectionBook ({book_name, author, user_id, updata_id}) {
+async function doCollectionBook ({book_id, book_name, author, user_id, updata_id}) {
   try {
+    const book = await Book_lists.findOne({
+      where: {
+        id: book_id
+      }
+    })
+    if (!book) return {
+      error: '该书不存在'
+    }
     // 先查询再存储
     const findValue = await Collections.findOne({
       where: {
@@ -150,15 +158,53 @@ async function doCollectionBook ({book_name, author, user_id, updata_id}) {
       return data
     }
     const result = await Collections.create({
+      book_id,
       book_name,
       author,
       user_id,
       updata_id
     })
+    // 书本被收藏，图书收藏书响应加1
+    book.increment({
+      'collection_number': 1
+    })
     return resultHandle(result)
   } catch(err) {
     return {
       error: err && err.errors ? err.errors[0].message : '链接错误'
+    }
+  }
+}
+
+/**
+ * 取消收藏
+ * @param {int} book_id 图书id
+ * @param {int} user_id 收藏用户id
+ */
+async function doCancleBook (book_id, user_id) {
+  try {
+    const book = await Book_lists.findOne({
+      where: {
+        id: book_id
+      }
+    })
+    if (!book) return {
+      error: '图书不存在'
+    }
+    const result = await Collections.destroy({
+      where: {
+        user_id,
+        book_id
+      }
+    }) 
+    // 图书收藏数减1
+    await book.decrement({
+      'collection_number': 1
+    })
+    return resultHandle(result)
+  } catch(err) {
+    return {
+      error: err.errors ? err.errors[0].message : '链接错误'
     }
   }
 }
@@ -201,5 +247,6 @@ module.exports = {
   doGetDateBook,
   doGetBookInfo,
   doCollectionBook,
-  doAddCircle
+  doAddCircle,
+  doCancleBook
 }

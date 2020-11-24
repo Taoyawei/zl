@@ -194,11 +194,48 @@ async function doDeleteLike (comment_id, user_id) {
     }
   }
 }
+
+/**
+ * 删除评论
+ * @param comment_id 评论id
+ */
+async function doDeleteComment (comment_id) {
+  try {
+    const info = await Comments.findOne({
+      where: {
+        id: comment_id
+      }
+    })
+    if (!info) {
+      return {
+        error: '该评论不存在'
+      }
+    }
+    // 删除评论下的回复
+    await Reply.destroy({
+      where: {
+        comment_id
+      }
+    })
+    // 删除评论
+    const result = await Comments.destroy({
+      where: {
+        id: comment_id
+      }
+    })
+    return resultHandle(result)
+  } catch (err) {
+    return {
+      error: err.errors ? err.errors[0].message : '链接错误'
+    }
+  }
+}
 module.exports = {
   doAddComment,
   doAddReply,
   doGetComment,
   doGetReply,
   doDotGive,
-  doDeleteLike
+  doDeleteLike,
+  doDeleteComment
 }

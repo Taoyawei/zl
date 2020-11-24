@@ -4,6 +4,7 @@
  */
 const {resultHandle} = require('../utils/utils.js')
 const {Circle, Book_lists, Users} = require('../db/model/index.js')
+const { ErrorModal } = require('../utils/response.js')
 
 /**
  * 新建圈子
@@ -30,6 +31,13 @@ async function doCreateCricle ({circle_type, create_time, create_id, brief}) {
       create_id,
       brief
     })
+    // 圈子表加入数据后我们要将圈子和用户关联起来
+    const user = await Users.findOne({
+      where: {
+        id: create_id
+      }
+    })
+    await result.addUsers(user)
     return result
     // return resultHandle(result)
   } catch(err) {
@@ -91,13 +99,23 @@ async function doAddCircle (user_id, circle_id) {
         id: circle_id
       }
     })
-    // const user = await Users.findOne({
-    //   where: {
-    //     id: user_id
-    //   }
-    // })
+    const user = await Users.findOne({
+      where: {
+        id: user_id
+      }
+    })
+    if (!circle) return {
+      error: '圈子不存在'
+    }
+    if (!user) return {
+      error: '用户不存在'
+    }
+    // 圈子人数加1
+    circle.increment({
+      'circle_number': 1
+    })
     const result = await circle.addUsers(user) // 多对多添加关联
-    const user = await Users.findAll()
+    // const user = await Users.findAll()
     // console.log('*********')
     // console.log(await circle.getUsers())
     return resultHandle(result)
@@ -109,9 +127,96 @@ async function doAddCircle (user_id, circle_id) {
     }
   }
 }
+
+/**
+ * 根据圈子id获取用户
+ * @param {int} circle_id
+ */
+async function doGetUser (circle_id) {
+  try {
+    // 先获取圈子
+    const circle = await Circle.findOne({
+      where: {
+        id: circle_id
+      }
+    })
+    // 使用get方法获取对应的用户
+    const result = await circle.getUsers()
+    return resultHandle(result)
+  } catch(err) {
+    return {
+      error:  err.errors ? err.errors[0].message : '链接错误'
+    }
+  }
+}
+
+/**
+ * 根据用户id获取圈子
+ * @param {int} user_id 用户id
+ */
+async function doGetCircle (user_id) {
+  try {
+    // 获取用户对象
+    const user = await Users.findOne({
+      where: {
+        id: user_id
+      }
+    })
+    const result = await user.getCircles()
+    return resultHandle(result)
+  } catch(err) {
+    return {
+      error: err.errors ? err.errors[0].message : '链接错误'
+    }
+  }
+}
+
+/**
+ * 删除圈子
+ * @param {int} create_id 创建人id
+ * @param {int} circle_id 圈子id
+ */
+async function doDeleteCircle({create_id, circle_id}) {
+  try {
+    // 获取圈子
+    const circle = await Circle.findOne({
+      where: {
+        id: circle_id
+      }
+    })
+    // 获取用户
+    // const user = await Users.findOne({
+    //   where: {
+    //     id: create_id
+    //   }
+    // })
+    if (!circle) return {
+      error: '圈子不存在'
+    }
+    // if (!user) return {
+    //   error: '用户不存在'
+    // }
+    // 先删除圈子和用户中间表中的数据
+    await circle.removeUsers()
+    // 删除圈子
+    const result = await Circle.destroy({
+      where: {
+        id: circle_id
+      }
+    })
+    return resultHandle(result)
+  } catch(err) {
+    return {
+      error: err.errors ? err.errors[0].message : '链接错误'
+    }
+  }
+}
 module.exports = {
   doCreateCricle,
   doFindCircle,
   doGetBook,
-  doAddCircle
+  doAddCircle,
+  doGetUser,
+  doGetCircle,
+  doDeleteCircle
 }

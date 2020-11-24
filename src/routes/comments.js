@@ -10,7 +10,8 @@ const {
   getComment,
   getReply,
   dotGive,
-  deleteLike
+  deleteLike,
+  deleteComment
 } = require('../controller/comments.js')
 
 // 添加评论,不是回复
@@ -63,5 +64,11 @@ router.post('/give', loginCheck, async (ctx, next) => {
 router.post('/delete/like', loginCheck, async (ctx, next) => {
   const { comment_id } = ctx.request.body
   ctx.body = await deleteLike(comment_id)
+})
+
+// 删除评论
+router.post('/deleteComment', loginCheck, async (ctx, next) => {
+  const {comment_id} = ctx.request.body
+  ctx.body = await deleteComment(comment_id)
 })
 module.exports = router

@@ -14,7 +14,8 @@ const {
   doGetComment,
   doGetReply,
   doDotGive,
-  doDeleteLike
+  doDeleteLike,
+  doDeleteComment
 } = require('../modular/comments.js')
 const { get } = require("../redis")
 /**
@@ -147,11 +148,29 @@ async function deleteLike (comment_id) {
     return new SuccessModal()
   }
 }
+
+/**
+ * 删除评论
+ * @param {int} comment_id
+ */
+async function deleteComment (comment_id) {
+  if (!comment_id) return new ErrorModal(requestParams)
+  const result = await doDeleteComment(comment_id)
+  if (result && result.error) {
+    return new ErrorModal({
+      code: 3007,
+      message: result.error
+    })
+  } else {
+    return new SuccessModal()
+  }
+}
 module.exports = {
   addComment,
   addReply,
   getComment,
   getReply,
   dotGive,
-  deleteLike
+  deleteLike,
+  deleteComment
 }
