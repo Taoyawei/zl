@@ -2,7 +2,7 @@
  * @abstract 用户信息操作
  * @author taoyawei
  */
-const { Users } = require('../db/model/index.js')
+const { Users, Fans } = require('../db/model/index.js')
 const { get } = require('../redis/index.js')
 const doCrypto = require('../utils/cryp.js')
 const { resultHandle } = require('../utils/utils.js')
@@ -65,8 +65,64 @@ async function domodify ({mobile, password, newPassword}) {
     return false
   }
 }
+
+/**
+ * 关注用户
+ * @param {int} user_id 用户id
+ * @param {int} fans_id 粉丝id
+ */
+async function doGoFollow (user_id, fans_id) {
+  try {
+    const user = await Users.findOne({
+      where: {
+        id: user_id
+      }
+    })
+    const findFans = await Fans.findOne({
+      where: {
+        user_id,
+        fans_id
+      }
+    })
+    if (!user) return { error: '该用户不存在' }
+    if (findFans) return { error: '粉丝已关注' }
+    const fans = await Fans.create({
+      user_id,
+      fans_id
+    })
+    // 用户粉丝中间表添加数据
+    await fans.addUsers(user)
+    // 有粉丝的用户的粉丝数加一
+    await user.increment({
+      'fans_number': 1
+    })
+    return resultHandle(fans)
+  } catch(err) {
+    console.log(err)
+    return {
+      error: err.errors ? err.errors[0].message : '链接错误'
+    }
+  }
+}
+
+/**
+ * 取消关注
+ * @param {int} user_id 被关注的用户id
+ * @param {int} id 本用户id
+ */
+async function doRemoveFollow (user_id, id) {
+  try {
+    
+  } catch(err) {
+    return {
+      error: err.errors ? err.errors[0].message : '链接错误'
+    }
+  }
+}
 module.exports = {
   getUser,
   createUser,
-  domodify
+  domodify,
+  doGoFollow,
+  doRemoveFollow
 }

@@ -5,7 +5,9 @@
 const {
   getUser,
   createUser,
-  domodify
+  domodify,
+  doGoFollow,
+  doRemoveFollow
 } = require('../modular/user.js')
 
 // 导入公共方法
@@ -95,9 +97,52 @@ async function modifyPassword ({mobile, password, newPassword}) {
   // 7fe36acc02204c5a0f61e5b77b8e0793
   // 7fe36acc02204c5a0f61e5b77b8e0793
 }
+
+/**
+ * 关注用户，成为该用户粉丝
+ * @param {int} user_id 关注用户的id
+ * @param {int} fans_id 本用户的id，成为粉丝
+ */
+async function goFollow (user_id, fans_id) {
+  if (!user_id || !fans_id) return new ErrorModal(requestParams)
+  const info = await get('userInfo')
+  if (info.id !== fans_id) return new ErrorModal({
+    code: 1002,
+    message: 'fans_id错误'
+  })
+  const result = await doGoFollow(user_id, fans_id)
+  if (result && result.error) {
+    return new ErrorModal({
+      error: 1001,
+      message: result.error
+    })
+  } else {
+    return new SuccessModal()
+  }
+}
+
+/**
+ * 取消关注
+ * @param {int} user_id 用户id，被关注的用户
+ */
+async function removeFollow (user_id) {
+  if (!user_id || !fans_id) return new ErrorModal(requestParams)
+  const info = await get('userInfo')
+  const result = await doRemoveFollow(user_id, id)
+  if (result && result.error) {
+    return new ErrorModal({
+      code: 1003,
+      message: result.error
+    })
+  } else {
+    return new SuccessModal()
+  }
+}
 module.exports = {
   setRegister,
   setLogin,
   deleteLogin,
-  modifyPassword
+  modifyPassword,
+  goFollow,
+  removeFollow
 }

@@ -8,7 +8,9 @@ const {
   setRegister,
   setLogin,
   deleteLogin,
-  modifyPassword
+  modifyPassword,
+  goFollow,
+  removeFollow
 } = require('../controller/user.js')
 
 // 注册
@@ -49,4 +51,15 @@ router.post('/modify/password', loginCheck, async (ctx, next) => {
   })
 })
 
+// 关注用户，就是成为这个用户的粉丝
+router.post('/follow', loginCheck, async (ctx, next) => {
+  const {user_id, fans_id} = ctx.request.body
+  ctx.body = await goFollow(user_id, fans_id)
+})
+
+// 取消关注
+router.post('remove/follow', loginCheck, async (ctx, next) => {
+  const {user_id} = ctx.request.body
+  ctx.body = await removeFollow(user_id)
+})
 module.exports = router
