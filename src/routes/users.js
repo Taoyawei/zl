@@ -58,7 +58,7 @@ router.post('/follow', loginCheck, async (ctx, next) => {
 })
 
 // 取消关注
-router.post('remove/follow', loginCheck, async (ctx, next) => {
+router.post('/remove/follow', loginCheck, async (ctx, next) => {
   const {user_id} = ctx.request.body
   ctx.body = await removeFollow(user_id)
 })

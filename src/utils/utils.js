@@ -20,7 +20,7 @@ function resultHandle (result) {
   if (result instanceof Array) {
     return result
   } else {
-    return result ? result.dataValues : []
+    return result ? result.dataValues ? result.dataValues : result : []
   }
 }
 module.exports = {

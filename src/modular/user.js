@@ -112,8 +112,28 @@ async function doGoFollow (user_id, fans_id) {
  */
 async function doRemoveFollow (user_id, id) {
   try {
-    
+    // 被关注的用户
+    const doUser = await Users.findOne({
+      where: {
+        id: user_id
+      }
+    })
+    if (!doUser) return {
+      error: '该用户已经不存在'
+    }
+    await doUser.removeFans()
+    const result = Fans.destroy({
+      where: {
+        user_id,
+        fans_id: id
+      }
+    })
+    await doUser.decrement({
+      'fans_number': 1
+    })
+    return resultHandle(result)
   } catch(err) {
+    console.log(err)
     return {
       error: err.errors ? err.errors[0].message : '链接错误'
     }

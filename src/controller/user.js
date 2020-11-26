@@ -126,9 +126,9 @@ async function goFollow (user_id, fans_id) {
  * @param {int} user_id 用户id，被关注的用户
  */
 async function removeFollow (user_id) {
-  if (!user_id || !fans_id) return new ErrorModal(requestParams)
+  if (!user_id) return new ErrorModal(requestParams)
   const info = await get('userInfo')
-  const result = await doRemoveFollow(user_id, id)
+  const result = await doRemoveFollow(user_id, info.id)
   if (result && result.error) {
     return new ErrorModal({
       code: 1003,
